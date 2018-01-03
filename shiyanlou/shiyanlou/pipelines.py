@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from sqlalchemy.orm import sessionmaker
 from shiyanlou.models import Repository,engine
+from datetime import datetime
 
 # Define your item pipelines here
 #
@@ -10,10 +11,8 @@ from shiyanlou.models import Repository,engine
 
 class ShiyanlouPipeline(object):
     def process_item(self, item, spider):
+        item['update_time']=datetime.strptime(item['update_time'],'%Y-%m-%dT%H:%M:%SZ')
         self.session.add(Repository(**item))
-        print("**********************")
-        print(item)
-        print("*******************")
         return item
 
 
